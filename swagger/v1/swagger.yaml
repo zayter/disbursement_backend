@@ -1,0 +1,193 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/orders/":
+    post:
+      summary: Create Order
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: Creates Order
+          content:
+            application/json:
+              example:
+                status: ok
+                data:
+                - id: 72
+                  amount: 25.22
+                  status: pending
+                  shopper:
+                    id: 22
+                    nif: NIF123456
+                    created_at: '2022-08-28T08:54:48.360Z'
+                  merchant:
+                    id: 1
+                    cif: CIF123456
+                    created_at: '2022-08-28T01:23:11.622Z'
+        '422':
+          description: Invalid params
+          content:
+            application/json:
+              example:
+                errors:
+                  amount:
+                  - can't be blank
+                  merchant_id:
+                  - can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    merchant_id:
+                      type: integer
+                      example: 1
+                    amount:
+                      type: float
+                      example: 20.52
+                  required:
+                  - merchant_id
+                  - amount
+              required:
+              - order
+  "/api/v1/users/sign_up":
+    post:
+      summary: Sign up user
+      tags:
+      - Sessions & Auth
+      parameters: []
+      responses:
+        '201':
+          description: Signs up user
+        '422':
+          description: Invalid params
+          content:
+            application/json:
+              example:
+                errors:
+                  password:
+                  - can't be blank
+                  email:
+                  - can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: john@test.com
+                    password:
+                      type: string
+                      example: Password123?
+                    password_confirmation:
+                      type: string
+                      example: Password123?
+                    shopper_attributes:
+                      type: object
+                      properties:
+                        nif:
+                          type: string
+                          example: NIF123456
+                    merchant_attributes:
+                      type: object
+                      properties:
+                        cif:
+                          type: string
+                          example: CIF123456
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+              required:
+              - user
+  "/api/v1/users/sign_in":
+    post:
+      summary: Sign in user
+      tags:
+      - Sessions & Auth
+      parameters: []
+      responses:
+        '201':
+          description: signs in user
+          content:
+            application/json:
+              example:
+                id: 1
+                email: example@shopper.com
+                created_at: '2022-07-28T19:12:33.589Z'
+                shopper:
+                  id: 1
+                  nif: NIF123456
+                  created_at: '2022-07-28T19:12:33.589Z'
+                merchant:
+                  id: 1
+                  cif: CIF123456
+                  created_at: '2022-07-28T19:12:33.589Z'
+        '401':
+          description: invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: john@test.com
+                    password:
+                      type: string
+                      example: Password123?
+                  required:
+                  - email
+                  - password
+              required:
+              - user
+  "/api/v1/users/sign_out":
+    delete:
+      summary: Sign out user
+      tags:
+      - Sessions & Auth
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: signs out user
+        '401':
+          description: unauthorized request
+          content:
+            application/json:
+              example:
+                error: You need to sign in or sign up before continuing.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+servers:
+- url: http://{localHost}
+  variables:
+    localHost:
+      default: localhost:3000
+- url: https://{stagingHost}
+  variables:
+    stagingHost:
+      default: staging.disbursement.io

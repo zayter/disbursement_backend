@@ -1,0 +1,104 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-gitlab-security
+
+AllCops:
+  Exclude:
+    - '**/assets/**/*'
+    - '**/javascript/**/*'
+    - '**/views/**/*'
+    - '**/bin/**/*'
+    - '**/coverage/**/*'
+    - '**/db/migrate/*'
+    - '**/db/**/schema.rb'
+    - '**/log/**/*'
+    - '**/public/**/*'
+    - '**/storage/**/*'
+    - '**/script/**/*'
+    - '**/vendor/**/*'
+    - '**/tmp/**/*'
+    - '**/node_modules/**/*'
+  ExtraDetails: true
+  NewCops: enable
+  TargetRubyVersion: 3.0
+
+# Layout
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyleForEmptyBraces: space
+
+Layout/LineLength:
+  Exclude:
+    - '**/db/**/*'
+    - 'spec/integration/**/*'
+
+# Style
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true
+
+Style/Documentation:
+  Enabled: false
+
+Style/ReturnNil:
+  Description: 'Use return instead of return nil.'
+  Enabled: true
+
+# Using modules wrapping classes inside serializers causes some errors because some modules have the same name of models
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/serializers/**/*.rb'
+
+# Rspec
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# Metrics
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'test/**/*.rb'
+    - 'spec/**/*_spec.rb'
+    - 'config/environments/*.rb'
+    - 'config/initializers/*.rb'
+    - 'config/routes.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*.rb'
+    - 'spec/**/*_spec.rb'
+
+# This cop is kind redundant, because the method being long not necessarily means that is complex, and if it's complex
+# the cop Metrics/AbcSize will get that method
+Metrics/MethodLength:
+  Enabled: false
+
+# Lint
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+# In the case of request specs that we test controllers, we can't follow the this cop because we are creating
+# request specs and not controller specs
+RSpec/FilePath:
+  Exclude:
+    - 'spec/requests/**/*'
+
+# The API docs won't have classes on the describe of test in this case
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/integration/**/*'
+
+# The issue is to parse an instance of some model to json without specifying the attributes that needs to be parsed
+# They suggest to use the only argument to prevent to send some sensitive data, but since we use serializers we are good
+# This normally is a problem in controllers, but this offense just looks for the usage of the .to_json method anywhere
+GitlabSecurity/JsonSerialization:
+  Enabled: false

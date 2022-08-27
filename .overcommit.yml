@@ -1,0 +1,160 @@
+# Use this file to configure the Overcommit hooks you wish to use. This will
+# extend the default configuration defined in:
+# https://github.com/sds/overcommit/blob/master/config/default.yml
+#
+# At the topmost level of this YAML file is a key representing type of hook
+# being run (e.g. pre-commit, commit-msg, etc.). Within each type you can
+# customize each hook, such as whether to only run it on certain files (via
+# `include`), whether to only display output if it fails (via `quiet`), etc.
+#
+# For a complete list of hooks, see:
+# https://github.com/sds/overcommit/tree/master/lib/overcommit/hook
+#
+# For a complete list of options that you can use to customize hooks, see:
+# https://github.com/sds/overcommit#configuration
+#
+
+CommitMsg:
+  ALL:
+    requires_files: false # apply checkers checking to all the files in the repository
+    quiet: false
+
+  HardTabs:
+    enabled: true
+    description: 'Check for hard tabs'
+
+  MessageFormat:
+    enabled: true
+    description: 'Check commit message matches expected pattern'
+    pattern: '\[[a-zA-Z]+-\d+\][\w\s]+'
+    expected_pattern_message: '[<project intials>-<Issue Id>] <Commit Message Description>'
+    sample_message: '[CAR-12] Add user login page'
+
+  # # This rule requires "hunspell" lib installed
+  # SpellCheck:
+  #   enabled: true
+  #   description: 'Check for misspelled words'
+  #   required_executable: 'hunspell'
+  #   flags: ['-a']
+
+  # TextWidth:
+  #   enabled: true
+  #   description: 'Check text width'
+  #   max_subject_width: 60
+  #   min_subject_width: 0
+
+
+PreCommit:
+  ALL:
+    problem_on_unmodified_line: report
+    requires_files: true
+    required: false # these checkers can be skipped using the "SKIP" var
+    quiet: false
+
+  EmptyMessage:
+    enabled: true
+    description: 'Check for empty commit message'
+    quiet: true
+
+  MergeConflicts:
+    enabled: true
+    description: 'Check for merge conflicts'
+    quiet: true
+    required_executable: 'grep'
+    flags: ['-IHn', "^<<<<<<<[ \t]"]
+
+  ForbiddenBranches:
+    enabled: true
+    branch_patterns: ['master', 'main', 'develop', 'dev', 'development']
+    description: 'Check commit creation attempts to restricted branches'
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
+
+  LocalPathsInGemfile:
+    quiet: true
+    description: Checks for local path set in the gemfile (usally done for debigging)
+    enabled: true
+
+  FixMe:
+    quiet: true
+    enabled: true
+    keywords: ["FIXME"]
+    exclude:
+      - .overcommit.yml
+
+  RailsSchemaUpToDate:
+    enabled: true
+    description: 'Check if database schema is up to date'
+    include:
+      - 'db/migrate/*.rb'
+      - 'db/schema.rb'
+  # https://rails-bestpractices.com/    
+  RailsBestPractices:
+    enabled: true
+    on_warn: fail
+    command: ['rails_best_practices', '--config', 'rails_best_practices.yml']
+
+  # https://github.com/JuanitoFatas/fast-ruby
+  Fasterer:
+    enabled: true
+    on_warn: fail
+    description: Fasterer will suggest some speed improvements
+
+  # https://github.com/troessner/reek/blob/master/docs/Code-Smells.md
+  Reek:
+    enabled: true
+    on_warn: fail
+    command: ['reek', '-c', 'reek.yml']
+
+
+  # database_consistency
+  CustomScript:
+    quiet: true
+    enabled: true
+    command: ['bundle', 'exec', 'database_consistency']
+
+  BundleCheck:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    required_executable: bundle
+    problem_on_unmodified_line: ignore
+    command: ['bundle', 'exec', 'rubocop']
+    on_warn: fail # Treat all warnings as failures
+
+  BundleAudit:
+    enabled: true
+    flags: ['--update']
+
+PrePush:
+  ForbiddenBranches:
+    enabled: true
+    branch_patterns: ['\A(master|main|develop|dev|development)\z']
+  Brakeman:
+    # command: ['bundle', 'exec', 'brakeman', '--force']
+    enabled: true
+    on_warn: fail
+
+
+PostCheckout:
+  BundleInstall:
+    enabled: true
+
+PostMerge:
+  BundleInstall:
+    enabled: true
+
+PostRewrite:
+  BundleInstall:
+    enabled: true
+
+PostCheckout:
+ ALL: # Special hook name that customizes all hooks of this type
+   quiet: true # Change all post-checkout hooks to only display output on failure
+#
+#  IndexTags:
+#    enabled: true # Generate a tags file with `ctags` each time HEAD changes

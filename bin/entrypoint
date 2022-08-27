@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+echo "Running migrations..."
+bundle exec rails db:migrate
+echo "Migrations finished!"
+
+# echo "Running seeds..."
+# bundle exec rails db:seed
+# echo "Seeds finished!"
+
+exec "$@"
