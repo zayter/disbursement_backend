@@ -5,4 +5,4 @@ staging:
 production:
   :concurrency: <%= ENV.fetch("RAILS_MAX_THREADS", 20).to_i %>
 :queues:
-  - default
+  - collect

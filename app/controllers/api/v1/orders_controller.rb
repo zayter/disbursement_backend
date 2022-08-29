@@ -15,6 +15,7 @@ module API
 
       def complete
         @order.complete
+        @order.save
         render json: { data: OrderSerializer.new(@order) }, status: :created
       end
 

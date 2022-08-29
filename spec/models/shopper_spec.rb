@@ -12,5 +12,6 @@ RSpec.describe Shopper do
 
   describe 'associations' do
     it { is_expected.to belong_to :user }
+    it { is_expected.to have_many :orders }
   end
 end

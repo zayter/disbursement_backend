@@ -15,21 +15,14 @@
 #  index_merchants_on_cif      (cif) UNIQUE
 #  index_merchants_on_user_id  (user_id)
 #
-class Merchant < ApplicationRecord
-  belongs_to :user
-  has_many :orders, dependent: :destroy
-  has_many :disbursements, dependent: :destroy
+FactoryBot.define do
+  factory :disbursement do
+    amount { Faker::Number.decimal(l_digits: 2) }
+    week { 1 }
+    year { Time.now.strftime('%Y').to_i }
 
-  validates :cif, presence: true, uniqueness: true
-
-  after_save :set_role
-
-  scope :with_completed_orders, -> { joins(:orders).merge(Order.completed) }
-
-  private
-
-  def set_role
-    user.roles << :merchant
-    user.save
+    after(:build) do |disbursement|
+      create(:merchant, disbursements: [disbursement]) if disbursement.merchant.blank?
+    end
   end
 end

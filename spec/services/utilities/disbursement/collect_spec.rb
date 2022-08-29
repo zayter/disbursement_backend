@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Disbursement::Collect do
+RSpec.describe Utilities::Disbursement::Collect do
   describe '#call' do
     subject(:call) { described_class.call(merchant.id, week, year) }
 
@@ -83,7 +83,7 @@ RSpec.describe Disbursement::Collect do
         order2.complete
         order2.save
         Timecop.return
-        Timecop.travel(Time.now.getlocal .beginning_of_year.beginning_of_day)
+        Timecop.travel(Time.now.getlocal.beginning_of_year.beginning_of_day)
       end
 
       it 'calculates from completed orders' do

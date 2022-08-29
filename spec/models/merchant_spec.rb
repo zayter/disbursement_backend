@@ -12,5 +12,7 @@ RSpec.describe Merchant do
 
   describe 'associations' do
     it { is_expected.to belong_to :user }
+    it { is_expected.to have_many :orders }
+    it { is_expected.to have_many :disbursements }
   end
 end

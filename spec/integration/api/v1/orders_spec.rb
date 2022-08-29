@@ -90,6 +90,10 @@ RSpec.describe 'Orders API' do
       produces 'application/json'
       security [bearerAuth: []]
       parameter name: :id, in: :path, type: :integer, required: true
+
+      response 200, 'Completes Order' do
+        xit
+      end
     end
   end
 end

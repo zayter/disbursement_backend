@@ -61,6 +61,22 @@ paths:
                   - amount
               required:
               - order
+  "/api/v1/orders/{id}/complete":
+    post:
+      summary: Completes Order
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Completes Order
   "/api/v1/users/sign_up":
     post:
       summary: Sign up user

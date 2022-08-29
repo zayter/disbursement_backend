@@ -23,5 +23,8 @@ FactoryBot.define do
     merchant
     shopper
     amount { Faker::Number.decimal(l_digits: 2) }
+    trait :completed_order do
+      aasm_state { 'completed' }
+    end
   end
 end

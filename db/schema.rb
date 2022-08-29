@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_28_082005) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_29_013607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "disbursements", force: :cascade do |t|
+    t.bigint "merchant_id", null: false
+    t.integer "week", null: false
+    t.integer "year", null: false
+    t.float "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_disbursements_on_merchant_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false

@@ -41,7 +41,7 @@ class Order < ApplicationRecord
   scope :completed_from_to, ->(from, to) { completed.where(completed_at: from..to) }
 
   def disbursment
-    Disbursement::Calculate.call(self)
+    Utilities::Disbursement::Calculate.call(self)
   end
 
   private
