@@ -3,6 +3,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'Orders API' do
+  # rubocop: disable RSpec/VariableName
   let(:Authorization) { (authenticated_header(user)['Authorization']).to_s }
   let(:merchant) { create(:merchant) }
   let(:shopper) { create(:shopper) }
