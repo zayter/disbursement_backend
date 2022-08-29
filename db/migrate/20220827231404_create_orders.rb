@@ -6,8 +6,6 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.float :amount, null: false  
       t.string :aasm_state, null: false
       t.string :completed_at
-      t.string :datetime
-
       t.timestamps
     end
   end

@@ -8,7 +8,6 @@
 #  aasm_state   :string           not null
 #  amount       :float            not null
 #  completed_at :string
-#  datetime     :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  merchant_id  :bigint           not null

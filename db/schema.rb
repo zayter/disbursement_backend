@@ -35,7 +35,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_082005) do
     t.float "amount", null: false
     t.string "aasm_state", null: false
     t.string "completed_at"
-    t.string "datetime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["merchant_id"], name: "index_orders_on_merchant_id"

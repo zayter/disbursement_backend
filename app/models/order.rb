@@ -8,7 +8,6 @@
 #  aasm_state   :string           not null
 #  amount       :float            not null
 #  completed_at :string
-#  datetime     :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  merchant_id  :bigint           not null
@@ -37,6 +36,12 @@ class Order < ApplicationRecord
     event :complete do
       transitions from: :pending, to: :completed, after: :set_completed_date
     end
+  end
+
+  scope :completed_from_to, ->(from, to) { completed.where(completed_at: from..to) }
+
+  def disbursment
+    Disbursement::Calculate.call(self)
   end
 
   private

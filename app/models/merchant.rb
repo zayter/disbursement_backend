@@ -23,6 +23,8 @@ class Merchant < ApplicationRecord
 
   after_save :set_role
 
+  scope :with_completed_orders, -> { joins(:orders).merge(Order.completed) }
+
   private
 
   def set_role
