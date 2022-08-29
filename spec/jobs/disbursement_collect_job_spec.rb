@@ -9,10 +9,10 @@ RSpec.describe DisbursementCollectJob do
 
   let(:amount1) { 49.99 }
   let(:amount2) { 300 }
-  let!(:order1) { create(:order, :completed_order, merchant: merchant1, shopper: shopper, amount: amount1) }
-  let!(:order2) { create(:order, :completed_order, merchant: merchant2, shopper: shopper, amount: amount2) }
 
   before do
+    create(:order, :completed_order, merchant: merchant1, shopper: shopper, amount: amount1)
+    create(:order, :completed_order, merchant: merchant2, shopper: shopper, amount: amount2)
     Timecop.travel(1.week)
   end
 
