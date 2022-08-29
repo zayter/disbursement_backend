@@ -11,4 +11,4 @@ production:
     cron: "0 1 * * 1 Europe/Madrid"
     class: DisbursementCollectJob
     queue: collect
-    description: 'At 01:00 AM, only on Monday'  
+    description: 'At 01:00 AM, only on Monday'

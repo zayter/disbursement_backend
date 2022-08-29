@@ -25,6 +25,7 @@ FactoryBot.define do
     amount { Faker::Number.decimal(l_digits: 2) }
     trait :completed_order do
       aasm_state { 'completed' }
+      completed_at { Time.zone.now }
     end
   end
 end
