@@ -26,7 +26,7 @@ RSpec.describe DisbursementCollectJob do
   end
 
   it 'creates disbursements' do
-    expect{ described_class.perform_now }.to change(Disbursement, :count).by(2)
+    expect { described_class.perform_now }.to change(Disbursement, :count).by(2)
     expect(merchant1.disbursements.last.amount).to be > 0
     expect(merchant2.disbursements.last.amount).to be > 0
   end

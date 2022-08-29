@@ -31,6 +31,8 @@ Rails.application.routes.draw do
           post 'complete'
         end
       end
+
+      resources :disbursements, only: %i[index]
     end
   end
 end

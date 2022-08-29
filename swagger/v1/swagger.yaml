@@ -4,6 +4,37 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/disbursements/":
+    get:
+      summary: Disbursement List
+      tags:
+      - Disbursement
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: week
+        in: query
+        example: '50'
+        required: true
+        schema:
+          type: integer
+      - name: merchant_id
+        in: query
+        example: '1'
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Disbursement List for given Merchant
+        '422':
+          description: Invalid params
+          content:
+            application/json:
+              example:
+                errors:
+                  week:
+                  - can't be blank
   "/api/v1/orders/":
     post:
       summary: Create Order
