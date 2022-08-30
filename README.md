@@ -92,5 +92,6 @@ For this challenge these pieces of code were created
 8. Add Tracking/Logs for the collect Job and better retry logic if process fails
 9. Dockerize 
 10. Separate this service into multiple micro services such as authentication and disbursement calculation  
-11. Add more Unit testings those are never enough :)
+11. Create a Helper or Service to calculate week number and dates and add more tests since there are too many edge cases 
+12. Add more Unit testings those are never enough :)
 
