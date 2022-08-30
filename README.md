@@ -90,5 +90,7 @@ For this challenge these pieces of code were created
 6. Improve Swagger Documentation by adding more cases and schemas.
 7. Add the manager role to see Disbursements for all Merchants , a Merchant should only see his Disbursements
 8. Add Tracking/Logs for the collect Job and better retry logic if process fails
-9. Add more Unit testings those are never enough :)
+9. Dockerize 
+10. Separate this service into multiple micro services such as authentication and disbursement calculation  
+11. Add more Unit testings those are never enough :)
 
